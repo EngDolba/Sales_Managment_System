@@ -6,14 +6,14 @@ public class TransactionCreateDto
 {
     public TimeOnly Time { get; set; }
     public Guid ServiceGuid { get; set; }
-    public String CarNumber { get; set; }
+    public string CarNumber { get; set; }
 
     public static TransactionCreateDto ToTransactionDto(Transaction tr)
     {
-        return new TransactionCreateDto()
+        return new TransactionCreateDto
         {
             Time = tr.Time,
-            ServiceGuid = tr.ServiceId,
+            ServiceGuid = tr.ServiceGuid,
             CarNumber = tr.CarNumber
         };
     }

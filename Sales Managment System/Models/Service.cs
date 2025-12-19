@@ -1,20 +1,14 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Sales_Managment_System.Models
+namespace Sales_Managment_System.Models;
+
+public class Service
 {
-    public class Service
-    {
-        [Key]
-        public Guid Id { get; set; } 
+    [Key] public Guid Id { get; set; }
 
-        [Required]
-        public string ServiceName { get; set; } = string.Empty;
+    [Required] public string ServiceName { get; set; } = string.Empty;
 
-        [Required]
-        public string ServiceType { get; set; } = string.Empty;
+    [Required] public string ServiceType { get; set; } = string.Empty;
 
-        [Required]
-        public double ServicePrice { get; set; }
-    }
+    [Required] public double ServicePrice { get; set; }
 }

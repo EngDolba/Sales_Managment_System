@@ -14,6 +14,4 @@ public class ServiceRepository(AppDbContext context) : IServiceRepository
     {
         return context.services.Find(guid);
     }
-
-    
 }

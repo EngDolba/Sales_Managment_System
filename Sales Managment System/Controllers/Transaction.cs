@@ -8,9 +8,11 @@ namespace Sales_Managment_System.Controllers;
 
 [Route("transactions")]
 [ApiController]
-public class TransactionController(ITransactionService transactionService,ILogger<TransactionController> logger,IDailyReportService dailyReportService) : Controller
+public class TransactionController(
+    ITransactionService transactionService,
+    ILogger<TransactionController> logger,
+    IDailyReportService dailyReportService) : Controller
 {
-
     [Route("/")]
     [Route("getAll")]
     [HttpGet]
@@ -25,7 +27,7 @@ public class TransactionController(ITransactionService transactionService,ILogge
     [HttpGet]
     public ActionResult<TransactionDto> GetTransaction(Guid guid)
     {
-        logger.LogInformation($"Received request: GetTransactions endpoint called. Arguments: Guid:{guid}",guid);
+        logger.LogInformation($"Received request: GetTransactions endpoint called. Arguments: Guid:{guid}", guid);
         TransactionDto transactionDto = transactionService.GetTransaction(guid);
         return Ok(transactionDto);
     }
@@ -34,10 +36,8 @@ public class TransactionController(ITransactionService transactionService,ILogge
     [HttpPost]
     public ActionResult<TransactionDto> AddTransaction(TransactionCreateDto transactionCreateDto)
     {
-        
         TransactionDto td = transactionService.CreateTransaction(transactionCreateDto);
         return Ok(td);
-
     }
 
     [HttpPost]
@@ -47,5 +47,4 @@ public class TransactionController(ITransactionService transactionService,ILogge
         DailyReport dr = dailyReportService.CloseDay(date);
         return Ok(dr);
     }
-
 }

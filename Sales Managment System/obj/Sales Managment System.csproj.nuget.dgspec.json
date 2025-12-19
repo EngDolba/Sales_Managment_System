@@ -44,6 +44,10 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "dependencies": {
+            "AutoFixture": {
+              "target": "Package",
+              "version": "[4.18.1, )"
+            },
             "FluentAssertions": {
               "target": "Package",
               "version": "[8.8.0, )"
@@ -76,6 +80,10 @@
               "target": "Package",
               "version": "[10.0.1, )"
             },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[18.0.1, )"
+            },
             "Microsoft.SqlServer.Server": {
               "target": "Package",
               "version": "[1.0.0, )"
@@ -107,6 +115,12 @@
             "xunit": {
               "target": "Package",
               "version": "[2.9.3, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.5, )"
             }
           },
           "imports": [

@@ -7,15 +7,15 @@ public class TransactionDto
     public Guid Id { get; set; }
     public TimeOnly Time { get; set; }
     public Guid ServiceGuid { get; set; }
-    public String CarNumber { get; set; }
+    public string CarNumber { get; set; }
 
     public static TransactionDto ToTransactionDto(Transaction tr)
     {
-        return new TransactionDto()
+        return new TransactionDto
         {
-            Id = tr.Id,
+            Id = tr.Guid,
             Time = tr.Time,
-            ServiceGuid = tr.ServiceId,
+            ServiceGuid = tr.ServiceGuid,
             CarNumber = tr.CarNumber
         };
     }

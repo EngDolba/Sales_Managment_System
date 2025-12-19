@@ -11,4 +11,3 @@ public interface ITransactionService
 
     public void DeleteAllTransactions();
 }
-

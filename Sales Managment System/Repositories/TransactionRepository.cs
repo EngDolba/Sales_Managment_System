@@ -7,14 +7,14 @@ namespace Sales_Managment_System.Repositories;
 public class TransactionRepository(AppDbContext context) : ITransactionRepository
 {
     public Transaction? GetById(Guid id)
-    { 
-        Transaction? tr = context.tr_daily.Include(t => t.Service).FirstOrDefault(t => t.Id == id);
-       return tr;
+    {
+        Transaction? tr = context.tr_daily.Include(t => t.Service).FirstOrDefault(t => t.Guid == id);
+        return tr;
     }
 
     public IEnumerable<Transaction> GetAll()
     {
-        var bla = context.tr_daily.Include(t => t.Service).ToList();
+        List<Transaction> bla = context.tr_daily.Include(t => t.Service).ToList();
         return bla;
     }
 

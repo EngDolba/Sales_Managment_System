@@ -6,5 +6,4 @@ public interface IDailyReportService
 {
     public void AddDailyReport(DailyReport dailyReport);
     public DailyReport CloseDay(DateOnly date);
-
 }

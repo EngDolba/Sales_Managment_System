@@ -1,17 +1,14 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Sales_Managment_System.Models
+namespace Sales_Managment_System.Models;
+
+public class HistoricalTransactions
 {
-    public class HistoricalTransactions
-    {
-        [Key]
-        public Guid Id { get; set; }   // ✅ Primary Key
+    [Key] public Guid Id { get; set; } // ✅ Primary Key
 
-        public string? TransactionId { get; set; }
-        public TimeOnly? Time { get; set; }
-        public Service? Service { get; set; }
-        public string? CarNumber { get; set; }
-        public DateOnly Date { get; set; }
-    }
+    public string? TransactionId { get; set; }
+    public TimeOnly? Time { get; set; }
+    public Service? Service { get; set; }
+    public string? CarNumber { get; set; }
+    public DateOnly Date { get; set; }
 }

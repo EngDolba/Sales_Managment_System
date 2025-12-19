@@ -7,8 +7,7 @@ public class DailyReportRepository(AppDbContext context) : IDailyReportRepositor
 {
     public void AddDailyReport(DailyReport dr)
     {
-            
-            context.daily_reports.Add(dr);
-            context.SaveChanges();
+        context.daily_reports.Add(dr);
+        context.SaveChanges();
     }
 }
