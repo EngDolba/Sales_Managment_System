@@ -15,27 +15,27 @@ public class TransactionServiceTests
     [Fact]
     public void CreateTransaction_serviceIsNull_throwsException()
     {
-        Fixture fix = new Fixture();
-        var transaction = fix.Create<TransactionCreateDto>();
-        
-        Mock<ITransactionRepository> mITransactionRepository = new Mock<ITransactionRepository>();
-        Mock<IServiceService> mIService = new Mock<IServiceService>();
-        Mock<ITransactionToTransactionDto> mtoTransactionDto = new Mock<ITransactionToTransactionDto>();
+        Fixture fix = new();
+        TransactionCreateDto? transaction = fix.Create<TransactionCreateDto>();
+
+        Mock<ITransactionRepository> mITransactionRepository = new();
+        Mock<IServiceService> mIService = new();
+        Mock<ITransactionToTransactionDto> mtoTransactionDto = new();
 
         mIService.Setup(s => s.GetService(It.IsAny<Guid>()))
             .Returns(null as Service);
-        TransactionService ts = new TransactionService(mITransactionRepository.Object, mIService.Object,mtoTransactionDto.Object);
+        TransactionService ts = new(mITransactionRepository.Object, mIService.Object, mtoTransactionDto.Object);
         Action act = () => ts.CreateTransaction(transaction);
         act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
-    public void createTransactino_successfulCase()
+    public void createTransaction_successfulCase()
     {
-        Fixture fix = new Fixture();
-        var transactionCreateDto = fix.Create<TransactionCreateDto>();
-        var service = fix.Create<Service>();
-        var transaction= new Transaction()
+        Fixture fix = new();
+        TransactionCreateDto? transactionCreateDto = fix.Create<TransactionCreateDto>();
+        Service? service = fix.Create<Service>();
+        Transaction transaction = new()
         {
             CarNumber = transactionCreateDto.CarNumber,
             ServiceGuid = transactionCreateDto.ServiceGuid,
@@ -43,40 +43,32 @@ public class TransactionServiceTests
             Service = service,
             Guid = Guid.NewGuid()
         };
-        var transactionDto = new TransactionDto()
+        TransactionDto transactionDto = new()
         {
             CarNumber = transaction.CarNumber,
             ServiceGuid = transaction.ServiceGuid,
             Time = transaction.Time,
             Id = transaction.Guid
         };
-        
-        Mock<IServiceService> mIService = new Mock<IServiceService>();
+
+        Mock<IServiceService> mIService = new();
         mIService.Setup(s => s.GetService(It.IsAny<Guid>()))
             .Returns(service);
-        Mock<ITransactionRepository> mITransactionRepository = new Mock<ITransactionRepository>();
-        Mock<ITransactionToTransactionDto> mtoTransactionDto = new Mock<ITransactionToTransactionDto>();
+        Mock<ITransactionRepository> mITransactionRepository = new();
+        Mock<ITransactionToTransactionDto> mtoTransactionDto = new();
         mtoTransactionDto
             .Setup(t => t.ToTransactionDto(It.Is<Transaction>(tr =>
-                    tr.ServiceGuid == transaction.ServiceGuid &&
-                    tr.Service == transaction.Service &&
-                    tr.CarNumber == transaction.CarNumber &&
-                    tr.Time == transaction.Time
+                tr.ServiceGuid == transaction.ServiceGuid &&
+                tr.Service == transaction.Service &&
+                tr.CarNumber == transaction.CarNumber &&
+                tr.Time == transaction.Time
             )))
-            .Returns(transactionDto);        
-        TransactionService trs = new TransactionService(mITransactionRepository.Object, mIService.Object, mtoTransactionDto.Object);
-        var tr = trs.CreateTransaction(transactionCreateDto);
+            .Returns(transactionDto);
+        TransactionService trs = new(mITransactionRepository.Object, mIService.Object, mtoTransactionDto.Object);
+        TransactionDto tr = trs.CreateTransaction(transactionCreateDto);
         tr.Should().NotBeNull();
         tr.ServiceGuid.Should().NotBe(Guid.Empty);
         tr.CarNumber.Should().Be(transaction.CarNumber);
         tr.Time.Should().Be(transaction.Time);
-        
-        
-        
-
-
-
-
     }
-    
 }

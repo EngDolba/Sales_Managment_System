@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using Sales_Managment_System.Contracts;
+﻿using Sales_Managment_System.Contracts;
 using Sales_Managment_System.Contracts.ServiceContracts;
 using Sales_Managment_System.DTOs;
 using Sales_Managment_System.Models;
@@ -20,8 +19,8 @@ public class DailyReportService(
     {
         double income = 0;
         int carAmount = 0;
-        IEnumerable<TransactionDto> list = transactionService.GetAllTransactions();
-        if (!list.IsNullOrEmpty())
+        IEnumerable<TransactionDto>? list = transactionService.GetAllTransactions();
+        if (list is null || !list.Any())
         {
             List<TransactionDto> transactions = list.ToList();
             List<Service> services = transactions

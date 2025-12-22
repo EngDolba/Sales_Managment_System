@@ -26,6 +26,6 @@ public class TransactionRepository(AppDbContext context) : ITransactionRepositor
 
     public void truncate()
     {
-        context.Database.ExecuteSqlRaw("truncate table \"tr_daily\"");
+        context.Database.ExecuteSqlRaw("`truncate table \"tr_daily\"");
     }
 }

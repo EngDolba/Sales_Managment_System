@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Sales_Managment_System.Contracts;
 using Sales_Managment_System.Contracts.ServiceContracts;
 using Sales_Managment_System.DTOs;
@@ -11,11 +12,13 @@ namespace Sales_Managment_System.Controllers;
 public class TransactionController(
     ITransactionService transactionService,
     ILogger<TransactionController> logger,
-    IDailyReportService dailyReportService) : Controller
+    IDailyReportService dailyReportService) : ControllerBase
 {
     [Route("/")]
     [Route("getAll")]
+    [Authorize]
     [HttpGet]
+    [Authorize(Roles = "Manager")]
     public ActionResult<IEnumerable<TransactionDto>> GetAllTransactions()
     {
         logger.LogInformation("Received request: GetAllTransactions endpoint called.");
@@ -24,15 +27,27 @@ public class TransactionController(
     }
 
     [Route("get/{guid}")]
+    
     [HttpGet]
+    [Authorize(Roles = "Salesperson,Manager")]
     public ActionResult<TransactionDto> GetTransaction(Guid guid)
     {
+        TransactionDto transactionDto;
         logger.LogInformation($"Received request: GetTransactions endpoint called. Arguments: Guid:{guid}", guid);
-        TransactionDto transactionDto = transactionService.GetTransaction(guid);
+        try
+        {
+             transactionDto = transactionService.GetTransaction(guid);
+        }
+        catch (ArgumentException e)
+        {
+            return BadRequest("No Such Transaction Was Found In Database");
+        }
+
         return Ok(transactionDto);
     }
 
     [Route("add")]
+    [Authorize(Roles = "Salesperson,Manager")]
     [HttpPost]
     public ActionResult<TransactionDto> AddTransaction(TransactionCreateDto transactionCreateDto)
     {
@@ -42,6 +57,7 @@ public class TransactionController(
 
     [HttpPost]
     [Route("/generateDailyReport")]
+    [Authorize(Roles = "Manager")]
     public ActionResult<DailyReport> CloseDay(DateOnly date)
     {
         DailyReport dr = dailyReportService.CloseDay(date);
